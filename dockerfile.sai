@@ -1,0 +1,15 @@
+FROM maven:3.9.3-ibmjava-8
+
+WORKDIR /app
+
+COPY . .
+
+RUN npm package
+
+RUN npm build
+
+expose
+
+FROM nginx
+
+copy --from=builder /app/dist/ usr/share/nginx/html
